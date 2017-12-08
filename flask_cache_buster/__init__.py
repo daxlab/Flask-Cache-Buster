@@ -75,3 +75,6 @@ def register_cache_buster(app, extensions=None):
     # Replace the default static file view with our debusting view.
     original_static_view = app.view_functions['static']
     app.view_functions['static'] = debusting_static_view
+
+
+__all__ = [register_cache_buster]
