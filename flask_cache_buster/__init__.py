@@ -51,7 +51,9 @@ class CacheBuster:
                 if not self.__is_file_to_be_busted(rooted_filename):
                     continue
                 with open(rooted_filename, 'r') as f:
-                    version = hashlib.md5(f.read()).hexdigest()[:self.hash_size]
+                    version = hashlib.md5(
+                        f.read().encode('utf-8')
+                    ).hexdigest()[:self.hash_size]
 
                 # add version
                 unbusted = os.path.relpath(rooted_filename, app.static_folder)
