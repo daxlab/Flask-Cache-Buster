@@ -6,7 +6,10 @@ HASH_SIZE = 10
 
 
 class CacheBuster:
-    def __init__(self, app, config=None):
+    def __init__(self, app=None, config=None):
+        if not (config is None or isinstance(config, dict)):
+            raise ValueError("`config` must be an instance of dict or None")
+
         self.app = app
         self.config = config
         self.extensions = self.config.get('extensions') if self.config else []
@@ -32,6 +35,8 @@ class CacheBuster:
         This allows setting long cache expiration values on static resources
         because whenever the resource changes, so does its URL.
         """
+        if not (config is None or isinstance(config, dict)):
+            raise ValueError("`config` must be an instance of dict or None")
 
         bust_map = {}  # map from an unbusted filename to a busted one
         unbust_map = {}  # map from a busted filename to an unbusted one
