@@ -50,6 +50,7 @@ class CacheBuster:
                 rooted_filename = os.path.join(dirpath, filename)
                 if not self.__is_file_to_be_busted(rooted_filename):
                     continue
+                app.logger.debug(f'Computing hashes for {rooted_filename}')
                 with open(rooted_filename, 'r') as f:
                     version = hashlib.md5(
                         f.read().encode('utf-8')
