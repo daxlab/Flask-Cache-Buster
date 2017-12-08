@@ -79,11 +79,12 @@ class CacheBuster:
             if endpoint == 'static':
                 values['filename'] = bust_filename(values['filename'])
 
-        def debusting_static_view(file):
+        def debusting_static_view(*args, **kwargs):
             """
             Serve a request for a static file having a busted name.
             """
-            return original_static_view(filename=unbust_filename(file))
+            kwargs['filename'] = unbust_filename(kwargs.get('filename'))
+            return original_static_view(*args, **kwargs)
 
         # Replace the default static file view with our debusting view.
         original_static_view = app.view_functions['static']
