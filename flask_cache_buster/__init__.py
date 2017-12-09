@@ -51,14 +51,15 @@ class CacheBuster:
                 if not self.__is_file_to_be_busted(rooted_filename):
                     continue
                 app.logger.debug(f'Computing hashes for {rooted_filename}')
-                with open(rooted_filename, 'r') as f:
+                with open(rooted_filename, 'rb') as f:
                     version = hashlib.md5(
-                        f.read().encode('utf-8')
+                        f.read()
                     ).hexdigest()[:self.hash_size]
 
                 # add version
                 unbusted = os.path.relpath(rooted_filename, app.static_folder)
-                busted = os.path.join(version, unbusted)
+                # busted = os.path.join(version, unbusted)
+                busted = f"{unbusted}?q={version}"
 
                 # save computation to map
                 bust_map[unbusted] = busted
